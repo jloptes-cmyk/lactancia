@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f7e8ee" />
+  <title>Gota a Gota</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app" id="app">
+    <header class="app-header">
+      <div>
+        <p id="dateLabel" class="overline">Hoy</p>
+        <h1>Gota a Gota</h1>
+      </div>
+      <button id="installBtn" class="round hidden" title="Instalar">⌂</button>
+    </header>
+
+    <main>
+      <section id="screen-home" class="screen active">
+        <article class="hero glass">
+          <div>
+            <p class="greeting" id="greeting">Buenos días</p>
+            <h2>Cada gota cuenta 💧</h2>
+            <p id="dailyMessage">Hoy también estás haciendo un gran trabajo.</p>
+          </div>
+          <div class="heart-drop">♥</div>
+        </article>
+
+        <article class="milk-card card">
+          <div class="bottle-wrap" id="bottleWrap">
+            <svg class="bottle" viewBox="0 0 120 190" aria-label="Botella de progreso">
+              <defs>
+                <clipPath id="bottleClip"><path d="M43 27h34v22c0 9 17 17 17 38v67c0 18-13 29-34 29s-34-11-34-29V87c0-21 17-29 17-38V27z"/></clipPath>
+                <linearGradient id="milkGrad" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#fff8de"/><stop offset="1" stop-color="#f7d9a4"/></linearGradient>
+              </defs>
+              <rect x="45" y="10" width="30" height="22" rx="9" fill="#c6b1ff" opacity=".55"/>
+              <path d="M43 27h34v22c0 9 17 17 17 38v67c0 18-13 29-34 29s-34-11-34-29V87c0-21 17-29 17-38V27z" fill="#fff" opacity=".65" stroke="#decede" stroke-width="4"/>
+              <g clip-path="url(#bottleClip)"><rect id="milkFill" x="20" y="180" width="80" height="0" fill="url(#milkGrad)"/><path d="M30 123c16-10 27 9 44 0 9-5 15-5 20-2" fill="none" stroke="#fff" stroke-width="4" opacity=".55"/></g>
+              <path d="M50 82h20M50 104h20M50 126h20" stroke="#d6c4cf" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+            </svg>
+          </div>
+          <div class="milk-info">
+            <p class="overline">Hoy llevas</p>
+            <h2 id="todayMl">0 ml</h2>
+            <p id="trendText" class="trend">Empieza con el primer registro de hoy.</p>
+            <div class="stats-row">
+              <span id="pumpStat">0 extracciones</span>
+              <span id="breastStat">0 tomas</span>
+              <span id="pillStat">0/3 💊</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card next-card">
+          <p class="overline">Próximo evento</p>
+          <div class="next-grid">
+            <div id="nextEmoji" class="event-emoji">🍼</div>
+            <div><h3 id="nextTitle">Sacaleches</h3><p id="nextSub">Calculando…</p></div>
+            <strong id="nextTime">--:--</strong>
+          </div>
+          <button id="quickDone" class="primary">Ya lo hice</button>
+        </article>
+
+        <div class="quick-actions">
+          <button data-open="pump">🍼<span>Sacaleches</span></button>
+          <button data-open="breast">❤️<span>Pecho</span></button>
+          <button data-open="motilium">💊<span>Motilium</span></button>
+          <button data-open="power">⚡<span>Poderosa</span></button>
+        </div>
+
+        <div class="section-title"><h2>Hoy</h2><button id="recalc" class="link-btn">Recalcular</button></div>
+        <div id="timeline" class="timeline"></div>
+      </section>
+
+      <section id="screen-log" class="screen">
+        <div class="section-title"><h2>Registros del día</h2><button id="newEntry" class="link-btn">Nuevo</button></div>
+        <div id="entriesList" class="entries"></div>
+      </section>
+
+      <section id="screen-progress" class="screen">
+        <article class="card progress-hero"><p class="overline">Mi evolución</p><h2 id="weekTotal">0 ml esta semana</h2><p id="weekCompare">Aún no hay datos suficientes para comparar.</p></article>
+        <article class="card"><h3>Últimos 7 días</h3><div id="bars" class="bars"></div></article>
+        <div class="metric-grid">
+          <article class="metric"><span>Media</span><strong id="avgPump">0 ml</strong></article>
+          <article class="metric"><span>Récord</span><strong id="recordPump">0 ml</strong></article>
+          <article class="metric"><span>Izquierdo</span><strong id="leftTotal">0 ml</strong></article>
+          <article class="metric"><span>Derecho</span><strong id="rightTotal">0 ml</strong></article>
+        </div>
+      </section>
+
+      <section id="screen-story" class="screen">
+        <article class="card story"><div class="big-drop">💧</div><h2>Mi historia</h2><p>Llevas <strong id="daysUsing">1 día</strong> cuidando este camino.</p><div class="story-grid"><span>Total</span><strong id="allMilk">0 ml</strong><span>Extracciones</span><strong id="allPumps">0</strong><span>Lactancias</span><strong id="allBreasts">0</strong></div></article>
+      </section>
+
+      <section id="screen-settings" class="screen">
+        <article class="card"><h2>Ajustes</h2><label>Motilium desde<input id="motiliumStart" type="time"></label><label>Sacaleches desde<input id="pumpStart" type="time"></label><label>Extracción noche<input id="nightPump" type="time"></label><label>Cada cuántas horas sacaleches<input id="pumpEvery" type="number" min="1" max="6"></label><button id="saveSettings" class="primary">Guardar ajustes</button></article>
+        <article class="card"><h3>Notificaciones</h3><p class="muted">En Android, instala la app desde Chrome y permite notificaciones.</p><button id="enableNotifications" class="secondary">Activar notificaciones</button></article>
+        <article class="card"><h3>Datos</h3><button id="exportData" class="secondary">Exportar JSON</button><button id="clearData" class="danger">Borrar datos</button></article>
+      </section>
+    </main>
+
+    <button id="fab" class="fab">+</button>
+    <nav class="bottom-nav">
+      <button class="active" data-tab="home">🏠<span>Inicio</span></button>
+      <button data-tab="log">📝<span>Registros</span></button>
+      <button data-tab="progress">📈<span>Evolución</span></button>
+      <button data-tab="story">❤️<span>Historia</span></button>
+      <button data-tab="settings">⚙️<span>Ajustes</span></button>
+    </nav>
+  </div>
+
+  <div id="sheet" class="sheet hidden">
+    <div class="sheet-card">
+      <button id="closeSheet" class="sheet-close">×</button>
+      <h2 id="sheetTitle">Nuevo registro</h2>
+      <div id="typePicker" class="type-picker">
+        <button data-type="pump">🍼 Sacaleches</button><button data-type="breast">❤️ Lactancia</button><button data-type="motilium">💊 Motilium</button><button data-type="power">⚡ Poderosa</button>
+      </div>
+      <form id="entryForm">
+        <input id="editingId" type="hidden"><input id="entryType" type="hidden" value="pump">
+        <div class="two"><label>Fecha<input id="entryDate" type="date" required></label><label>Hora<input id="entryTime" type="time" required></label></div>
+        <div id="milkFields"><div class="two"><label>Izquierdo<input id="leftMl" type="number" min="0" value="0"></label><label>Derecho<input id="rightMl" type="number" min="0" value="0"></label></div><p id="formTotal" class="total-pill">Total: 0 ml</p></div>
+        <div id="breastFields" class="hidden"><label>Duración<input id="duration" type="number" min="0" placeholder="18 min"></label><label>Pecho<select id="side"><option>Ambos</option><option>Izquierdo</option><option>Derecho</option></select></label><label>¿Se quedó satisfecha?<select id="mood"><option></option><option>😊 Sí</option><option>😐 Regular</option><option>😢 No</option></select></label></div>
+        <label>Notas<textarea id="notes" rows="2" placeholder="Opcional"></textarea></label>
+        <button class="primary" type="submit">Guardar</button>
+        <button id="deleteEntry" class="danger hidden" type="button">Eliminar registro</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden">✨ Guardado</div>
+  <script src="app.js"></script>
+</body>
+</html>
